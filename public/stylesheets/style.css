@@ -5,6 +5,11 @@ body {
 a {
   color: #00B7FF;
 }
+.stat {
+  font-size: 6em;
+  text-align: center;
+}
+
 #test {
   height:400px;
   width: 400px;
@@ -90,4 +95,3 @@ background: -webkit-radial-gradient(center, ellipse cover, rgba(133,57,191,0.82)
   top: 210px;
   left:754px;
 }
-

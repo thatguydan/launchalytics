@@ -1,8 +1,127 @@
 extends layout
 
 block content
-  h1 *alytics
-  p Measure it all!
+  .row
+    .large-10.columns
+      h2 *alytics
+      p Count it all!
+      hr
+    .large-2.columns
+      #heart
+        i.foundicon-heart(style="font-size:10em")
+  .row
+    .large-8.columns
+      .row
+        .large-4.columns
+          h5 Wifi Clients
+          #TotalWifi.stat 0
+        .large-4.columns
+          h5 Webservers
+          #TotalServers.stat 0
+        .large-4.columns
+          h5 Tweets
+          #TotalTweets.stat 0
 
-  p
-    a(href="/drilldown") Concourse Visualization
+      .row
+        .large-12.columns
+          #chart_div()
+          .panel
+            p
+              | This is a twelve column section in a row. Each of these includes a div.panel element so you can see where the columns are - it's not required at all for the grid.
+      .row
+        .large-6.columns
+          .panel
+            p Six columns
+        .large-6.columns
+          .panel
+            p Six columns
+      .row
+        .large-4.columns
+          .panel
+            p Four columns
+        .large-4.columns
+          .panel
+            p Four columns
+        .large-4.columns
+          .panel
+            p Four columns
+      .row
+        .large-8.columns
+          h3 The Grid
+        .large-4.columns
+          label(for='customDropdown') Medium Example
+          select#customDropdown.medium
+            option(disabled='DISABLED') This is a dropdown
+            option This is another option
+            option This is another option too
+            option Look, a third option
+
+    .large-4.columns
+      h4 Environment
+      .row 
+        .large-6.columns
+          h6 Upstairs
+          .panel(style="height:150px")
+            h3#UpTemp 0
+            h3#UpHumidity 0
+        .large-6.columns
+          h6 Downstairs
+          .panel(style="height:150px")
+            h3#DownTemp.subheader 0
+            h3#DownHumidity.subheader 0
+
+      p
+        | We're stoked you want to try Foundation! To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.
+      h4 Other Resources
+      p Once you've exhausted the fun in this document, you should check out:
+      ul.disc
+        li
+          a(href='http://foundation.zurb.com/docs') Foundation Documentation
+          br
+          | Everything you need to know about using the framework.
+        li
+          a(href='http://github.com/zurb/foundation') Foundation on Github
+          br
+          | Latest code, issue reports, feature requests and more.
+        li
+          a(href='http://twitter.com/foundationzurb') @foundationzurb
+          br
+          | Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).
+  script
+    document.write('<script src=' +
+    ('__proto__' in {} ? '/js/vendor/zepto' : '/js/vendor/jquery') +
+    '.js><\\/script>')
+  script(src='/js/foundation.min.js')
+  //
+      
+      <script src="js/foundation/foundation.js"></script>
+      
+      <script src="js/foundation/foundation.alerts.js"></script>
+      
+      <script src="js/foundation/foundation.clearing.js"></script>
+      
+      <script src="js/foundation/foundation.cookie.js"></script>
+      
+      <script src="js/foundation/foundation.dropdown.js"></script>
+      
+      <script src="js/foundation/foundation.forms.js"></script>
+      
+      <script src="js/foundation/foundation.joyride.js"></script>
+      
+      <script src="js/foundation/foundation.magellan.js"></script>
+      
+      <script src="js/foundation/foundation.orbit.js"></script>
+      
+      <script src="js/foundation/foundation.placeholder.js"></script>
+      
+      <script src="js/foundation/foundation.reveal.js"></script>
+      
+      <script src="js/foundation/foundation.section.js"></script>
+      
+      <script src="js/foundation/foundation.tooltips.js"></script>
+      
+      <script src="js/foundation/foundation.topbar.js"></script>
+      
+      
+  script
+    $(document).foundation();
