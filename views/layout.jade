@@ -2,6 +2,20 @@ doctype 5
 html
   head
     title= title
+    script(src='/javascripts/jquery-1.9.1.min.js')
+    script(src='/javascripts/pusher.min.js')
+    script(src='/javascripts/ninja.js')
+    script(src='/javascripts/app.js')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
+    script
+      var options = {
+        server: 'api.ninja.is',
+        version: 0,
+        accessToken: 'asd'
+      };
+
+      var Ninja = new Ninja(options);
+      App.user = !{JSON.stringify(user)};
+      $(document).on('ready', App.init);
