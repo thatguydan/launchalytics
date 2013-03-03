@@ -10,12 +10,10 @@ html
   body
     block content
     script
-      var options = {
-        server: 'api.ninja.is',
-        version: 0,
-        accessToken: 'asd'
-      };
-
-      var Ninja = new Ninja(options);
       App.user = !{JSON.stringify(user)};
+      App.ninja = new Ninja({
+        server: '',
+        version: 0,
+        accessToken: ''
+      });
       $(document).on('ready', App.init);
