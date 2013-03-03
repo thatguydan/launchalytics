@@ -6,7 +6,12 @@
     "start": "node app"
   },
   "dependencies": {
-    "express": "3.0.2",
-    "jade": "*"
+    "express": "~3.0.2",
+    "jade": "~0.28.1",
+    "request": "~2.14.0",
+    "authom": "https://github.com/thatguydan/authom/tarball/master",
+    "connect-redis": "~1.4.5",
+    "redis-url": "~0.1.0",
+    "ninja-blocks": "~0.1.3"
   }
 }

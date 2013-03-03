@@ -7,40 +7,13 @@ exports.index = function(req, res){
   res.render('index', { title: 'Express' });
 };
 
-exports.putUserStore = function(req,res) {
+/*
+ * handle Ninja's authentication
+ */
 
-  for (var i in req.body) {
-    if (req.body.hasOwnProperty(i)) {
-      if (typeof req.body[i]==="object")
-        req.body[i] = JSON.stringify(req.body[i])
-    }
-  }
-  req.redisClient.hmset('user:'+req.session.ninja.id+':store',req.body,function(err) {
+exports.handleNinjaAuthentication = function(req,res,ninja) {
 
-    if (err) {
-      res.json({error:'Unkown Database Error'},500);
-      return;
-    }
-    res.send(200);
-  });
-};
-
-exports.getUserStore = function(req,res) {
-
-  req.redisClient.hgetall('user:'+req.session.ninja.id+':store',function(err,reply) {
-
-    reply = reply || {};
-    for (var i in reply) {
-      if (reply.hasOwnProperty(i)) {
-        try { reply[i] = JSON.parse(reply[i]) }
-        catch (err) { }
-      }
-    }
-
-    if (err) {
-      res.json({error:'Unkown Database Error'},500);
-      return;
-    }
-    res.json(reply);
-  });
+  req.session.ninja = ninja.data;
+  req.session.token = ninja.token;
+  res.redirect('/');
 };
