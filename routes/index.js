@@ -6,10 +6,18 @@ var request = require('request');
 
 exports.index = function(req, res){
   res.render('index', {
-    title: 'Express',
+    title: '*alytics',
     user:req.session.ninja
   });
 };
+
+exports.drilldown = function(req, res){
+  res.render('drilldown', {
+    title: '*alytics',
+    user:req.session.ninja
+  });
+};
+
 
 /*
  * handle Ninja's authentication

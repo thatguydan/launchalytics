@@ -1,8 +1,93 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
+#test {
+  height:400px;
+  width: 400px;
+ /* background-image: -webkit-gradient(
+    linear, left top, left bottom, from(rgba(50,50,50,0.8)),
+    to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
+  );*/
+background: -webkit-radial-gradient(center, ellipse cover, rgba(133,57,191,0.82) 0%,rgba(133,57,191,0.69) 53%,rgba(143,74,196,0.68) 57%,rgba(255,255,255,0) 100%); 
+}
+#hall {
+  position:relative;
+  width: 1200px;
+  height: 740px;
+  border: 1px solid #ccc;
+  padding: 30px;
+  background: url(/img/floorplan-large.gif) no-repeat -90px -60px;
+}
+
+.pie {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    clip: rect(0px, 150px, 300px, 0px);
+    /*opacity: 0.7;*/
+    background-color: #8200FF;
+    /*background: -webkit-radial-gradient(circle, rgb(0, 0, 0), rgb(255, 255, 255));*/
+    background: -webkit-radial-gradient(center, ellipse cover, 
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) 3%,
+      rgba(133,57,191,0.8) 3%,
+      rgba(133,57,191,0.8) 20%,
+      rgba(255,255,255,0.5) 70%,
+      rgba(255,255,255,0) 99%); 
+  -webkit-transform:rotate(50deg);
+
+}
+.hold {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    clip: rect(0px, 300px, 300px, 150px);
+}
+.pie {
+}
+#pir1 {
+  -webkit-transform:rotate(150deg);
+  top: 409px;
+  left:345px;
+}
+#pir2 {
+  -webkit-transform:rotate(214deg);
+  top: 90px;
+  left:600px;
+}
+#pir3 {
+  -webkit-transform:rotate(225deg);
+  top: 90px;
+  left:520px;}
+#pir4 {
+  -webkit-transform:rotate(155deg);
+  top: 409px;
+  left:430px;
+}
+#pir5 {
+  -webkit-transform:rotate(228deg);
+  top: 100px;
+  left: 235px;
+}
+#pir6 {
+  -webkit-transform:rotate(145deg);
+  top: 409px;
+  left:255px;
+}
+#pir7 {
+  -webkit-transform:rotate(96deg);
+  top: 90px;
+  left:592px;
+}
+#pir8 {
+  -webkit-transform:rotate(330deg);
+  top: 210px;
+  left:754px;
+}
+
