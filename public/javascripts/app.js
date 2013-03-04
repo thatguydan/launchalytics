@@ -43,7 +43,7 @@ var App = {
             if (device.GUID == '4312BB000564_0101_0_31') $('#UpTemp').text(device.DA);
             if (device.GUID == '2712BB000643_0101_0_31') $('#DownTemp').text(device.DA);
             console.log(device.GUID);
-          case 999: case 1007: case 1005: case 1000;
+          case 999: case 1007: case 1005: case 1000:
             // ignore leds
             break;
           default:
