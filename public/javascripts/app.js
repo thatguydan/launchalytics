@@ -51,10 +51,10 @@ var App = {
       } else {
         App.animate('heart','pulse');
         if (device.D == 9006) {
-            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(device.DA));          
+            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(device.DA));
         } else {
             // console.log(App.idmap[device.GUID]);
-            $(App.idmap[device.GUID]).text(device.DA);          
+            $(App.idmap[device.GUID]).text(device.DA);
         }
       }
     });
@@ -68,11 +68,11 @@ var App = {
         $(App.idmap[guid]).text(last);
 
         if(guid == "8BA093F06383AF4C_launch_0_9006") {
-          var options = { 
-            // from: timestamp, 
-            // to: timestamp, 
-            interval: "1h", 
-            fn: "count" 
+          var options = {
+            // from: timestamp,
+            // to: timestamp,
+            interval: "1h",
+            fn: "count"
           }
           d.GetHistoricalData(options, function(data) {
             // console.log(data);
@@ -127,7 +127,7 @@ var App = {
     console.log(images);
     var lis = '';
     Object.keys(images).forEach(function(ip) {
-      lis += '<li><img width=150 src="/screenshots/'+ip+'/'+images[ip]+'"></li>';
+      lis += '<li><img class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'"></li>';
     });
     $('.screenshot-container').html(lis);
   }

@@ -26,8 +26,19 @@ exports.get = function(req,res) {
 
           if (err) return cb(err);
           else {
-            out[item] = contents;
-            cb(null,out)
+            async.filter(contents,function(file,cb) {
+
+              fs.stat(baseDirectory+item+'/'+file,function(err,stats) {
+                if (err || stats.size < 40*2014) cb(false);
+                else cb(true);
+              });
+
+            },function(filteredFiles) {
+              if (filteredFiles.length>0) {
+                out[item] = filteredFiles;
+              }
+              cb(null,filteredFiles)
+            });
           }
         });
       },function(err) {
