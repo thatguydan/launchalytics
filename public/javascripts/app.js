@@ -199,6 +199,11 @@ var App = {
     $.get('/screenshots.json')
      .done(function(data) {
         var images = App.utils.findClosestImagesToDate(data,new Date());
+
+        setInterval(function() {
+          App.populateHomeThumbnails(images);
+        },3000);
+
         App.populateHomeThumbnails(images);
      })
   },
@@ -214,18 +219,18 @@ var App = {
 
     var lis = '';
 
-    setInterval(function() {
-
-      Object.keys(images).splice(0,19).forEach(function(ip) {
-
-        var id = App.utils.sanitize(ip);
-
-        lis += '<li><img  data-host="'+ip+'" data-time="'+images[ip]+'" class="screenshot-home-thumbnail" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
-      });
-      $('.js-home-thumbnails').html(lis);
-    },2000);
+    var keys = Object.keys(images);
+    App.utils.randomize(keys);
 
 
+    keys.splice(0,19).forEach(function(ip) {
+
+      var id = App.utils.sanitize(ip);
+
+      lis += '<li><img data-host="'+ip+'" data-time="'+images[ip]+'" class="screenshot-home-thumbnail" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
+    });
+
+    $('.js-home-thumbnails').html(lis);
 
   }
 

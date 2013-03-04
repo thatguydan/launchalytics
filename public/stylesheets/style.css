@@ -181,4 +181,9 @@ background: -webkit-radial-gradient(center, ellipse cover, rgba(133,57,191,0.82)
 
 .screenshot-home-thumbnail {
   max-width:60px;
+  max-height:60px;
+}
+
+.js-home-thumbnails {
+  min-height: 355px
 }
