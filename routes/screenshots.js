@@ -29,6 +29,8 @@ exports.get = function(req,res) {
           else {
             async.filter(contents,function(file,cb) {
 
+              if (file.indexOf('thumb')===0) return cb(false);
+
               fs.stat(baseDirectory+item+'/'+file,function(err,stats) {
                 if (err || stats.size < 20*2014) cb(false);
                 else cb(true);

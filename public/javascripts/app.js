@@ -177,8 +177,6 @@ var App = {
       lis += '<li><img data-host="'+ip+'" data-time="'+images[ip]+'" class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
     });
 
-    // $('')
-
   },
   updateScreenshots: function(value) {
     var time = (END_DATE.getTime()-START_DATE.getTime())*(value/100) + START_DATE.getTime();
@@ -205,7 +203,7 @@ var App = {
      })
   },
 
-  populateHomeThumbnails: function(data) {
+  populateHomeThumbnails: function(images) {
     // var goodHosts = [
     //   '10.100.12.249:3000',
     //   '10.100.15.251:3000',
@@ -214,8 +212,20 @@ var App = {
     //   '10.100.25.232:3000'
     // ]
 
+    var lis = '';
 
-    console.log(data);
+    setInterval(function() {
+
+      Object.keys(images).splice(0,19).forEach(function(ip) {
+
+        var id = App.utils.sanitize(ip);
+
+        lis += '<li><img  data-host="'+ip+'" data-time="'+images[ip]+'" class="screenshot-home-thumbnail" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
+      });
+      $('.js-home-thumbnails').html(lis);
+    },2000);
+
+
 
   }
 

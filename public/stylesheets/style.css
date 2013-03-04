@@ -178,3 +178,7 @@ background: -webkit-radial-gradient(center, ellipse cover, rgba(133,57,191,0.82)
 .modal-screenshot {
   max-height:600px;
 }
+
+.screenshot-home-thumbnail {
+  max-width:60px;
+}
