@@ -12,6 +12,26 @@ block content
   script(type='text/javascript')
     $(function () {
       var xx = h337.create({"element":document.getElementById("floor"), "radius":25, "visible":true});
+      var load_subdevice = function(id, cb) {
+        // TODO: mash device into this list so we can pick the best device for a given subdevice
+        var pir_subdevices = [
+          "Fypdq",
+          "NzFJs",
+          "9gnKV",
+          "MCxbw",
+          "hFnwT",
+          "gEsyw",
+          "UaeJ5"];
+        return $.getJSON('/rest/v0/device/2712BB000643_0_0_11/subdevice/' + pir_subdevices[id] + '/data?interval=10min', function(data, status) {cb(id, data)});
+      };
+
+      var datasets = [];
+      for (i = 0 ; i < 7; i++) {
+        load_subdevice(i, function(id, data) {
+          datasets[id] = data.data;
+        });
+      }
+
       var load_heatmap = function(value) {
         // TODO: these coords are correct, but I'm not sure which PIR subdevices these map to.
         var data = {max: 90, data: [
@@ -24,12 +44,20 @@ block content
           {x: 498, y: 606},
           {x: 580, y: 610},
         ]};
+
         var max = 90;
         for (d in data.data) {
-            data.data[d].count=Math.floor(Math.random()*max+1);
+          c = 0;
+          // is there not a better way of doing this in js?
+          if (datasets.length > d) {
+            if (datasets[d].length > value) {
+              c = datasets[d][value].v;
+            }
+          }
+          data.data[d].count = c;
         }
         xx.store.setDataSet(data);
-      }
+      };
       $("#slider").slider({
         slide: function(event, ui) { load_heatmap(ui.value); }
       });
