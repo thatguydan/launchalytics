@@ -83,6 +83,9 @@ block content
         }
         xx.store.setDataSet(data);
       };
+      xx.get("canvas").onclick = function(ev){
+        console.log(h337.util.mousePosition(ev));
+      };
       $("#slider").slider({
         slide: function(event, ui) { load_heatmap(ui.value); }
       });
