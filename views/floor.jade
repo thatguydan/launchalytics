@@ -19,51 +19,91 @@ block content
       var xx = h337.create(config);
       var load_subdevice = function(id, cb) {
         // TODO: mash device into this list so we can pick the best device for a given subdevice
+        /*
+        Downstairs: 2712BB000643_0_0_11
+          "9gnKV" -> 2
+          "hFnwT" -> 3
+          "gEsyw" -> 4
+          "NzFJs" -> 5
+          "MCxbw" -> 6
+          "UaeJ5" -> 7
+          "Fypdq" -> 8
+
+        Upstairs: 4312BB000564_0_0_11
+          "gL9hK" -> 1
+          "cWDR5" -> 2
+          "Ibrv4" -> 3
+          "Qog1K" -> 4
+          "wZyiL" -> 5
+          "IabpG" -> 6
+          "BbQRl" -> 7
+          "mZLsC" -> 8
+        */
+
         var pir_subdevices = [
-          "Fypdq",
-          "NzFJs",
-          "9gnKV",
-          "MCxbw",
-          "hFnwT",
-          "gEsyw",
-          "UaeJ5"];
-        return $.getJSON('/rest/v0/device/2712BB000643_0_0_11/subdevice/' + pir_subdevices[id] + '/data?interval=10min', function(data, status) {cb(id, data)});
+          "4312BB000564_0_0_11:gL9hK", // 1
+          "2712BB000643_0_0_11:9gnKV", // 2
+          "2712BB000643_0_0_11:hFnwT", // 3
+          "4312BB000564_0_0_11:Qog1K", // 4
+          "2712BB000643_0_0_11:NzFJs", // 5
+          "4312BB000564_0_0_11:IabpG", // 6
+          "2712BB000643_0_0_11:UaeJ5", // 7
+          "2712BB000643_0_0_11:Fypdq", // 8
+        ];
+        var parts = pir_subdevices[id].split(':');
+        return $.getJSON('/rest/v0/device/' + parts[0] + '/subdevice/' + parts[1] + '/data?interval=10min', function(data, status) {cb(id, data)});
       };
 
       var datasets = [];
-      for (i = 0 ; i < 7; i++) {
+      for (i = 0 ; i < 8; i++) {
         load_subdevice(i, function(id, data) {
           datasets[id] = data.data;
         });
       }
 
       var load_heatmap = function(value) {
-        // TODO: these coords are correct, but I'm not sure which PIR subdevices these map to.
-        var data = {max: 90, data: [
-          {x: 345, y: 264},
-          {x: 629, y: 254},
-          {x: 714, y: 260},
-          {x: 776, y: 261},
-          {x: 900, y: 320},
-          {x: 411, y: 605},
-          {x: 498, y: 606},
-          {x: 580, y: 610},
+        var data = {data: [
+          {x: 515, y: 268}, // 1
+          {x: 714, y: 260}, // 2
+          {x: 629, y: 254}, // 3
+          {x: 556, y: 268}, // 4
+          {x: 345, y: 264}, // 5
+          {x: 411, y: 264}, // 6
+          {x: 776, y: 261}, // 7
+          {x: 900, y: 320}, // 8
         ]};
 
-        var max = 90;
+        var max = 0;
         for (d in data.data) {
-          c = 0;
+          var c = 0;
           // is there not a better way of doing this in js?
           if (datasets.length > d) {
             if (datasets[d].length > value) {
               c = datasets[d][value].v;
+              max = Math.max(c, max);
             }
           }
           data.data[d].count = c;
         }
+        data.max = max;
         xx.store.setDataSet(data);
       };
+      xx.get("canvas").onclick = function(ev){
+        console.log(h337.util.mousePosition(ev));
+      };
       $("#slider").slider({
-        slide: function(event, ui) { load_heatmap(ui.value); }
+        animate: "fast",
+        slide: function(event, ui) { load_heatmap(ui.value); },
+        change: function(event, ui) { load_heatmap(ui.value); }
       });
+
+      var nextSlide = function() {
+        var v = $('#slider').slider('value');
+        if (v < 99) {
+          $('#slider').slider('value', v + 1);
+        } else {
+          clearInterval(interval);
+        }
+      }
+      var interval = setInterval(function(){nextSlide();}, 500);
     });
