@@ -59,17 +59,15 @@ var requiresAuthentication = function(req,res,next) {
     }
 
   } else {
-    req.session = {
-      "ninja":{
-        "id":"1a47ef2e-8387-11e2-bfe5-22000a9d2c4c",
-        "name":"Daniel",
-        "email":"launch",
-        "preferences":null,
-        "pusherChannel":"f7X903XIhgQB3RB2NIsHhbwxcM7yyflVI1AScYd8wU",
-        "pusherKey":"ccff70362850caf79c9f"
-      },
-      "token":"v1zv7g0uLxR7SVUCQLM3UKS26QEdUKXu2btPQZ8jZ1U"
-    }
+    req.session.ninja = {
+      "id":"1a47ef2e-8387-11e2-bfe5-22000a9d2c4c",
+      "name":"Daniel",
+      "email":"launch",
+      "preferences":null,
+      "pusherChannel":"f7X903XIhgQB3RB2NIsHhbwxcM7yyflVI1AScYd8wU",
+      "pusherKey":"ccff70362850caf79c9f"
+    };
+    req.session.token = "v1zv7g0uLxR7SVUCQLM3UKS26QEdUKXu2btPQZ8jZ1U";
   }
   next();
 }
