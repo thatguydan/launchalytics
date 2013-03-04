@@ -60,10 +60,30 @@ App = {
   init: function() {
     var pusher = new Pusher(App.user.pusherKey);
     var channel = pusher.subscribe(App.user.pusherChannel);
+    var config = {
+      "radius": 60,
+      "element": "hall",
+      "visible": true,
+      "opacity": 60,
+      "gradient": { 0.3: "rgb(0,0,255)", 0.55: "rgb(0,255,255)", 0.65: "rgb(0,255,0)", 0.9: "yellow", 1.0: "rgb(255,0,0)" }
+    };
+    var heatmap = h337.create(config);
 
     channel.bind('data', function(device) {
       if (device.D == 11) {
         App.animate(App.sensors[device.DA],'flash');
+        var coords = {
+          "010101010111010101010101" : {x: 515, y: 268}, // 1
+          "010101010101010101011101" : {x: 702, y: 267}, // 2
+          "000101010101010101010101" : {x: 629, y: 254}, // 3
+          "010101010101000001010101" : {x: 579, y: 268}, // 4
+          "000001010101010101010101" : {x: 369, y: 268}, // 5
+          "010101010101010100010101" : {x: 431, y: 264}, // 6
+          "010100000101010101010101" : {x: 782, y: 267}, // 7
+          "010101010101010101010101" : {x: 881, y: 301}, // 8
+        };
+        var coord = coords[device.DA];
+        heatmap.store.addDataPoint(coord.x, coord.y, 1);
       } else {
         App.animate('heart','pulse');
         if (device.D == 9006) {
