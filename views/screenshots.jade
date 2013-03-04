@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  ul.screenshot-container.small-block-grid-1
+
+  script
+    $(document).on('ready',function() {
+      App.fetchImages();
+    });
