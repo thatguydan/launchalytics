@@ -16,7 +16,7 @@ html
     link(rel='stylesheet', href='/css/foundation.css')
     link(rel='stylesheet', href='/css/general_foundicons.css')
     script(src='/js/vendor/custom.modernizr.js')
-    script(type='text/javascript', src='https://www.google.com/jsapi')
+
 
     script(src='/js/foundation.min.js')
     script(src='/javascripts/jquery.reveal.js')
@@ -31,7 +31,6 @@ html
   body
     block content
     script
-      google.load("visualization", "1", {packages: ["corechart"]});
       App.user = !{JSON.stringify(user)};
       ninja = new Ninja({
         server: '',
@@ -50,4 +49,6 @@ html
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-
+    script(type='text/javascript', src='https://www.google.com/jsapi')
+    script
+      google.load("visualization", "1", {packages: ["corechart"]});

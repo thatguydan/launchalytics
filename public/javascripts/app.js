@@ -1,13 +1,19 @@
+(function() {
+
+var mainData;
+var mainChart;
 var count = 0;
 var chartData = {};
 var sortedDates = [];
 var rawData = {};
+var rawKeys = [];
 var rawTweetData = {};
+var sortedTweetData = [];
 var now = moment(Number);
 var dbyg = {};
 var START_DATE = new Date('Sat Mar 02 2013 12:00:00 GMT-0800 (PST)');
 var END_DATE = new Date();
-var App = {
+App = {
   screenshotData:{},
 
   titleNum : 0,
@@ -94,9 +100,8 @@ var App = {
             _.each(data,function(d) {
               if (!rawTweetData[d.t]) rawTweetData[d.t] = {};
               rawTweetData[d.t]['launch'] = d.v;
-              console.log(d.v)
             });
-
+            sortedTweetData = Object.keys(rawTweetData).sort();
           });
         }
         if(guid == "8BA093F06383AF4C_launchhack_0_9006") {
@@ -106,13 +111,13 @@ var App = {
             _.each(data,function(d) {
               if (!rawTweetData[d.t]) rawTweetData[d.t] = {};
               rawTweetData[d.t]['launchhack'] = d.v;
-              console.log(d.v)
             });
+            sortedTweetData = Object.keys(rawTweetData).sort();
           });
         }
         setTimeout(function(){
           sortedDates = Object.keys(rawData).sort();
-          drawDefault();
+          App.drawDefault();
         },2500);
 
 
@@ -186,11 +191,9 @@ var App = {
 
   },
   updateModalScreenshots: function(host,value) {
-    console.log(arguments);
     var time = (END_DATE.getTime()-START_DATE.getTime())*(value/100) + START_DATE.getTime();
     var images = App.utils.findClosestImagesToDate(App.screenshotData,new Date(time));
     var url = App.utils.getLargeImageUrl(host,images[host]);
-    console.log(url)
     $('.js-modal-screenshot').attr('src',url);
     $('#date').text(moment(time).fromNow())
   },
@@ -235,3 +238,176 @@ var App = {
   }
 
 };
+
+var mainChart = false;
+var chartOptions = {
+    chartArea : { width:600,left:25,height:300},
+    vAxis : {
+        baselineColor : '#ccc',
+        gridlines : { color: '#eee', count: 5 },
+        textStyle : { color : "#777"}
+    },
+    hAxis : {
+        baselineColor : 'white',
+        gridlines : { color: 'white' },
+        format : "HH:mm",
+        viewWindowMode : "maximized",
+        textStyle : { color : "#777"}
+    },
+    height: 340,
+    width: 650,
+    legend: {width: 300, position: 'in'},
+    interpolateNulls: true,
+    curveType: 'function',
+    series: []
+};
+
+App.drawDefault = function() {
+    mainChart = new google.visualization.AreaChart(document.getElementById('mainChart'));
+
+    mainData = new google.visualization.DataTable();
+    mainData.addColumn('datetime', 'Time');
+    mainData.addColumn('number', 'Web Servers');
+    mainData.addColumn('number', 'Wifi Clients');
+
+    for (i=0;i<sortedDates.length;i++) {
+        var t = sortedDates[i];
+        var v = rawData[t];
+        var a = new Date(t);
+        if (v['#TotalServers']) var b =  v['#TotalServers'];
+        if (v['#TotalWifi']) var c = v['#TotalWifi'];
+        if (b || c)
+            mainData.addRow([a,b,c]);
+    };
+    var options = chartOptions;
+    // options['curveType']= "function";
+    mainChart.draw(mainData, options);
+}
+
+App.drawTemp = function() {
+    mainChart = new google.visualization.LineChart(document.getElementById('mainChart'));
+
+    mainData = new google.visualization.DataTable();
+    mainData.addColumn('datetime', 'Time');
+    mainData.addColumn('number', 'Upstairs');
+    mainData.addColumn('number', 'Downstairs');
+
+    for (i=0;i<sortedDates.length;i++) {
+        var t = sortedDates[i];
+        var v = rawData[t];
+        var a = new Date(t);
+        if (v['#UpTemp']) var b =  Math.round(v['#UpTemp']*100)/100;
+        if (v['#DownTemp']) var c =  Math.round(v['#DownTemp']*100)/100;
+        if (b || c)
+            mainData.addRow([a,b,c]);
+    };
+
+    var options = chartOptions;
+    options['curveType']= "function";
+    mainChart.draw(mainData, options);
+}
+
+App.drawServers = function() {
+    mainChart = new google.visualization.AreaChart(document.getElementById('mainChart'));
+
+    mainData = new google.visualization.DataTable();
+    mainData.addColumn('datetime', 'Time');
+    mainData.addColumn('number', 'Apache');
+    mainData.addColumn('number', 'Rails/Node');
+    mainData.addColumn('number', '4000');
+    mainData.addColumn('number', 'Sinatra');
+    mainData.addColumn('number', '8080');
+
+    for (i=0;i<sortedDates.length;i++) {
+        var t = sortedDates[i];
+        var v = rawData[t];
+        var a = new Date(t);
+        var b = (v['#80']) ? v['#80'] : null;
+        var c = (v['#3000']) ? v['#3000'] : null;
+        var d = (v['#4000']) ? v['#4000'] : null;
+        var e = (v['#4567']) ? v['#4567'] : null;
+        var f = (v['#8080']) ? v['#8080'] : null;
+        if (b || c || d || e || f )
+            mainData.addRow([a,b,c,d,e,f]);
+    };
+
+    var options = chartOptions;
+    options['isStacked']= true;
+    mainChart.draw(mainData, options);
+}
+
+App.drawWifi = function() {
+    mainChart = new google.visualization.AreaChart(document.getElementById('mainChart'));
+
+    mainData = new google.visualization.DataTable();
+    mainData.addColumn('datetime', 'Time');
+    mainData.addColumn('number', 'Apple');
+    mainData.addColumn('number', 'LG');
+    mainData.addColumn('number', 'Motorola');
+    mainData.addColumn('number', 'Samsung');
+    mainData.addColumn('number', 'Asus');
+    mainData.addColumn('number', 'HTC');
+    mainData.addColumn('number', 'Intel');
+    mainData.addColumn('number', 'Other');
+
+    var CLEAN_DATE = new Date('Sat Mar 03 2013 18:15:00 GMT-0800 (PST)');
+
+    var keys = Object.keys(rawData);
+
+    for (var i=0;i<sortedDates.length;i++) {
+
+      var t = sortedDates[i];
+      var v = rawData[t];
+      var a = new Date(t);
+      if (a < CLEAN_DATE) continue;
+      if (!v.hasOwnProperty('#apple')) continue;
+
+      var r = [
+        a,
+        v['#apple'] || null,
+        v['#lg'] || null,
+        v['#motorola'] || null,
+        v['#samsung'] || null,
+        v['#asustek'] || null,
+        v['#htc'] || null,
+        v['#intel'] || null,
+        v['#other'] || null
+      ];
+
+      mainData.addRow(r);
+    };
+
+    var options = chartOptions;
+    options['isStacked']= true;
+    mainChart.draw(mainData, options);
+}
+App.drawTweets = function() {
+    mainChart = new google.visualization.AreaChart(document.getElementById('mainChart'));
+
+    mainData = new google.visualization.DataTable();
+    mainData.addColumn('datetime', 'Time');
+    mainData.addColumn('number', '#LAUNCH');
+    mainData.addColumn('number', '#LAUNCHHACK');
+
+
+   for (var i=0;i<sortedTweetData.length;i++) {
+
+      var t = sortedTweetData[i];
+      var v = rawTweetData[t];
+      var a = new Date(t);
+      if (v.hasOwnProperty('#launch') || v.hasOwnProperty('#launchhack')) continue;
+
+      var a = new Date(t);
+      mainData.addRow([
+        a,
+        v['launch'] || 0,
+        v['launchhack'] || 0
+      ]);
+    };
+
+    var options = chartOptions;
+    options['isStacked']= true;
+    mainChart.draw(mainData, options);
+}
+
+})()
