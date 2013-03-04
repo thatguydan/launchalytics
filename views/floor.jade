@@ -62,7 +62,7 @@ block content
       }
 
       var load_heatmap = function(value) {
-        var data = {max: 90, data: [
+        var data = {data: [
           {x: 515, y: 268}, // 1
           {x: 714, y: 260}, // 2
           {x: 629, y: 254}, // 3
@@ -73,17 +73,19 @@ block content
           {x: 900, y: 320}, // 8
         ]};
 
-        var max = 90;
+        var max = 0;
         for (d in data.data) {
-          c = 0;
+          var c = 0;
           // is there not a better way of doing this in js?
           if (datasets.length > d) {
             if (datasets[d].length > value) {
               c = datasets[d][value].v;
+              max = Math.max(c, max);
             }
           }
           data.data[d].count = c;
         }
+        data.max = max;
         xx.store.setDataSet(data);
       };
       xx.get("canvas").onclick = function(ev){
