@@ -2,7 +2,12 @@ var count = 0;
 
 var dbyg = {};
 
+var START_DATE = new Date('Sat Mar 02 2013 12:00:00 GMT-0800 (PST)');
+var END_DATE = new Date();
+
+
 var App = {
+  screenshotData:{},
 
   titleNum : 0,
   sensors : {
@@ -119,17 +124,40 @@ var App = {
   fetchImages: function() {
     $.get('/screenshots.json')
      .done(function(data) {
-        var images = App.utils.findClosestImagesToDate(data,new Date('Sun Mar 03 2013 17:42:22 GMT-0800 (PST)'));
+        App.screenshotData = data;
+        var images = App.utils.findClosestImagesToDate(data,START_DATE);
         App.populateImageCanvas(images);
+        $('#date').text(moment(START_DATE).fromNow())
      })
   },
   populateImageCanvas: function(images) {
-    console.log(images);
     var lis = '';
     Object.keys(images).forEach(function(ip) {
-      lis += '<li><img class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'"></li>';
+
+      var id = App.utils.sanitize(ip);
+
+      lis += '<li><img id="s_'+id+'" data-time="'+images[ip]+'" class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
     });
-    $('.screenshot-container').html(lis);
+    $('.js-screenshot-list').html(lis);
+  },
+  repopulateImageCanvas: function(images) {
+
+    Object.keys(images).forEach(function(ip) {
+
+      var id = App.utils.sanitize(ip);
+
+      lis += '<li><img id="s_'+id+'" data-time="'+images[ip]+'" class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
+    });
+
+    // $('')
+
+  },
+  updateScreenshots: function(value) {
+    var time = (END_DATE.getTime()-START_DATE.getTime())*(value/100) + START_DATE.getTime();
+    var images = App.utils.findClosestImagesToDate(App.screenshotData,time);
+    App.populateImageCanvas(images);
+    $('#date').text(moment(time).fromNow())
+
   }
 
 };

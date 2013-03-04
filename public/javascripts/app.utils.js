@@ -23,5 +23,8 @@ App.utils = {
     });
 
     return out;
+  },
+  sanitize: function(input) {
+    return input.replace(/\W/g, '')
   }
 }

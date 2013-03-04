@@ -4,9 +4,19 @@ block content
   p
     a(href="/") Back to dashboard
 
-  ul.screenshot-container.small-block-grid-1
+  #date
+
+  #screenshot-container
+    #slider
+    br
+
+    ul.js-screenshot-list.screenshot-list.small-block-grid-1.centered
 
   script
     $(document).on('ready',function() {
       App.fetchImages();
+      $("#slider").slider({
+        slide: function(event, ui) { App.updateScreenshots(ui.value); }
+      });
+
     });

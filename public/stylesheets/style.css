@@ -140,5 +140,26 @@ background: -webkit-radial-gradient(center, ellipse cover, rgba(133,57,191,0.82)
 }
 
 .screenshot-image {
-  max-height: 200px;
+  width: 256px;
+  max-height: 256px;
+/*
+  border: 1px solid #eee;
+  box-shadow: -1px 1px 3px #eee;*/
+}
+
+#date {
+  position:absolute;
+  top:8px;
+  right:5px;
+  font-size:1.5em;
+}
+
+#screenshot-container {
+  width:95%;
+  margin: 1em auto;
+}
+
+.screenshot-list {
+  text-align: center;
+  width: 95%;
 }
