@@ -38,7 +38,7 @@ var App = {
     "4312BB000564_0101_0_30"    : "#UpHumidity",
     "2712BB000643_0101_0_30"    : "#DownHumidity",
     "4312BB000564_0101_0_31"    : "#UpTemp",
-    "2712BB000643_0101_0_31"    : "#DownTemp", 
+    "2712BB000643_0101_0_31"    : "#DownTemp",
   },
 
   init: function() {
@@ -114,6 +114,22 @@ var App = {
     setTimeout(function(){
       el.removeClass('animate '+anim);
     },1300);
+  },
+
+  fetchImages: function() {
+    $.get('/screenshots.json')
+     .done(function(data) {
+        var images = App.utils.findClosestImagesToDate(data,new Date('Sun Mar 03 2013 17:42:22 GMT-0800 (PST)'));
+        App.populateImageCanvas(images);
+     })
+  },
+  populateImageCanvas: function(images) {
+    console.log(images);
+    var lis = '';
+    Object.keys(images).forEach(function(ip) {
+      lis += '<li><img width=150 src="/screenshots/'+ip+'/'+images[ip]+'"></li>';
+    });
+    $('.screenshot-container').html(lis);
   }
 
 };
