@@ -2,7 +2,7 @@ extends layout
 
 block content
   .row
-    .large-10.columns
+    .small-10.columns
       h2(style="width:307px;display:inline-block")
         #titlePrefix0.titlePrefix hack
         #titlePrefix1.titlePrefix.hidden launch
@@ -15,7 +15,7 @@ block content
         #tileSuffix.titleSuffix *alytics
       p.tagline If you don't count it, does it really exist?
       hr(style="margin-top:0")
-    .large-2.columns#flare
+    .small-2.columns#flare
       #heart
         i.foundicon-heart
       #plus
@@ -23,52 +23,84 @@ block content
   .row
     .large-8.columns
       .row
-        .large-4.columns
+        .small-4.columns
           h5 Wifi Clients
           #TotalWifi.stat 0
-        .large-4.columns
+        .small-4.columns
           h5 Webservers
           #TotalServers.stat 0
-        .large-4.columns
+        .small-4.columns
           h5 Tweets
           #TotalTweets.stat 0
 
       .row
         .large-12.columns
-          #chart_div()
-          .panel
-            p
-              | This is a twelve column section in a row. Each of these includes a div.panel element so you can see where the columns are - it's not required at all for the grid.
-      .row
-        .large-6.columns
-          .panel
-            p Six columns
-        .large-6.columns
-          .panel
-            p Six columns
-      .row
-        .large-4.columns
-          .panel
-            p Four columns
-        .large-4.columns
-          .panel
-            p Four columns
-        .large-4.columns
-          .panel
-            p Four columns
-      .row
-        .large-8.columns
-          h3 The Grid
-        .large-4.columns
-          label(for='customDropdown') Medium Example
-          select#customDropdown.medium
-            option(disabled='DISABLED') This is a dropdown
-            option This is another option
-            option This is another option too
-            option Look, a third option
+          #chart_div
+
+      h4.subheader.boxHeading Wifi Device Vendors
+      .boundingBox
+        .row  
+          .small-3.columns
+            h5.subheader Apple
+            #apple.smallstat 0
+          .small-3.columns
+            h5.subheader HTC
+            #htc.smallstat 0
+          .small-3.columns
+            h5.subheader LG
+            #lg.smallstat 0
+          .small-3.columns
+            h5.subheader Samsung
+            #samsung.smallstat 0
+        .row(style="padding-top:10px")
+          .small-3.columns
+            h5.subheader ASUS
+            #asustek.smallstat 0
+          .small-3.columns
+            h5.subheader Motorola
+            #motorola.smallstat 0
+          .small-3.columns
+            h5.subheader Intel
+            #intel.smallstat 0
+          .small-3.columns
+            h5.subheader Other
+            #other.smallstat 0
+
+      h4.subheader.boxHeading Active Web Server Ports
+      .boundingBox
+        .row  
+          .small-3.columns
+            h5.subheader Apache
+            #80.smallstat 0
+          .small-3.columns
+            h5.subheader Node &amp; Rails
+            #3000.smallstat 0
+          .small-2.columns
+            h5.subheader 4000 
+            #4000.smallstat 0
+          .small-2.columns
+            h5.subheader Sinatra
+            #4567.smallstat 0
+          .small-2.columns
+            h5.subheader 8080
+            #8080.smallstat 0
+
+
+      //- .row
+      //-   .large-8.columns
+      //-     h3 The Grid
+      //-   .large-4.columns
+      //-     label(for='customDropdown') Medium Example
+      //-     select#customDropdown.medium
+      //-       option(disabled='DISABLED') This is a dropdown
+      //-       option This is another option
+      //-       option This is another option too
+      //-       option Look, a third option
 
     .large-4.columns
       h4 Environment
+      p Its getting hot in here.
+        i.foundicon-cloud(style="font-size:2em")
       .row 
         .large-6.columns
           h6 Upstairs
@@ -98,11 +130,11 @@ block content
           a(href='http://twitter.com/foundationzurb') @foundationzurb
           br
           | Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).
-  script
-    document.write('<script src=' +
-    ('__proto__' in {} ? '/js/vendor/zepto' : '/js/vendor/jquery') +
-    '.js><\\/script>')
-  script(src='/js/foundation.min.js')
+  //- script
+  //-   document.write('<script src=' +
+  //-   ('__proto__' in {} ? '/js/vendor/zepto' : '/js/vendor/jquery') +
+  //-   '.js><\\/script>')
+  //- script(src='/js/foundation.min.js')
   //
       
       <script src="js/foundation/foundation.js"></script>
@@ -135,4 +167,4 @@ block content
       
       
   script
-    $(document).foundation();
+    //- $(document).foundation();

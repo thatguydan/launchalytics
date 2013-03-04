@@ -6,7 +6,6 @@ html
     script(src='/javascripts/pusher.min.js')
     script(src='/javascripts/ninja.js')
     script(src='/javascripts/app.js')
-    link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/animate.min.css')
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width')
@@ -16,12 +15,14 @@ html
     script(src='/js/vendor/custom.modernizr.js')
     script(type='text/javascript', src='https://www.google.com/jsapi')
     script(type='text/javascript', src='/javascripts/chart.js')
+    script(type='text/javascript', src='/javascripts/underscore-min.js')
+    link(rel='stylesheet', href='/stylesheets/style.css')
         
   body
     block content
     script
       App.user = !{JSON.stringify(user)};
-      App.ninja = new Ninja({
+      ninja = new Ninja({
         server: '',
         version: 0,
         accessToken: ''
