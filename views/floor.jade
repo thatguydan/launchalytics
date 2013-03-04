@@ -3,6 +3,7 @@ extends layout
 block content
   p
     a(href="/") Back to dashboard
+  #date
   #slider
   #floor
 
@@ -73,6 +74,7 @@ block content
         ]};
 
         var max = 0;
+        var time = 0;
         for (d in data.data) {
           var c = 0;
           // is there not a better way of doing this in js?
@@ -80,12 +82,16 @@ block content
             if (datasets[d].length > value) {
               c = datasets[d][value].v;
               max = Math.max(c, max);
+              time = datasets[d][value].t;
             }
           }
           data.data[d].count = c;
         }
         data.max = max;
         xx.store.setDataSet(data);
+        if (time) {
+          $('#date').text(moment(time).fromNow());
+        }
       };
       xx.get("canvas").onclick = function(ev){
         console.log(h337.util.mousePosition(ev));
