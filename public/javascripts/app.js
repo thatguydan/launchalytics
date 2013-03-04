@@ -202,7 +202,7 @@ var App = {
 
         setInterval(function() {
           App.populateHomeThumbnails(images);
-        },3000);
+        },10000);
 
         App.populateHomeThumbnails(images);
      })
