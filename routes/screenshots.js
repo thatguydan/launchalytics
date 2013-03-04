@@ -1,7 +1,7 @@
 var fs = require('fs');
 var async = require('async');
 var path = require('path');
-var baseDirectory = '/Users/dan/ninjaClient/ninja_modules/nmap/screenshots/';
+var baseDirectory = process.env.IMG_LOCATION;
 
 exports.get = function(req,res) {
   fs.readdir(baseDirectory,function(err,contents) {
