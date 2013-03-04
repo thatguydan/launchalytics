@@ -11,7 +11,14 @@ block content
   script(src='/js/vendor/heatmap.js')
   script(type='text/javascript')
     $(function () {
-      var xx = h337.create({"element":document.getElementById("floor"), "radius":25, "visible":true});
+      var config = {
+        "radius": 60,
+        "element": "floor",
+        "visible": true,
+        "opacity": 60,
+        "gradient": { 0.3: "rgb(0,0,255)", 0.55: "rgb(0,255,255)", 0.65: "rgb(0,255,0)", 0.9: "yellow", 1.0: "rgb(255,0,0)" }
+      };
+      var xx = h337.create(config);
       var load_subdevice = function(id, cb) {
         // TODO: mash device into this list so we can pick the best device for a given subdevice
         var pir_subdevices = [
