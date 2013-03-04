@@ -54,7 +54,7 @@ var App = {
   init: function() {
     var pusher = new Pusher(App.user.pusherKey);
     var channel = pusher.subscribe(App.user.pusherChannel);
-  
+
     channel.bind('data', function(device) {
       if (device.D == 11) {
         App.animate(App.sensors[device.DA],'flash');
@@ -89,7 +89,7 @@ var App = {
 
         if(guid == "8BA093F06383AF4C_launch_0_9006") {
           d.GetHistoricalData({interval: "1h",fn:"count"}, function(data) {
-            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));          
+            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));
             App.launchTweets = data[data.length-1].v;
             _.each(data,function(d) {
               if (!rawTweetData[d.t]) rawTweetData[d.t] = {};
@@ -101,7 +101,7 @@ var App = {
         }
         if(guid == "8BA093F06383AF4C_launchhack_0_9006") {
           d.GetHistoricalData({interval: "1h",fn:"count"}, function(data) {
-            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));          
+            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));
             App.launchhackTweets = data[data.length-1].v;
             _.each(data,function(d) {
               if (!rawTweetData[d.t]) rawTweetData[d.t] = {};
@@ -187,6 +187,20 @@ var App = {
     console.log(url)
     $('.js-modal-screenshot').attr('src',url);
     $('#date').text(moment(time).fromNow())
+  },
+
+  fetchHomeThumbnails: function() {
+    $.get('/screenshots.json')
+     .done(function(data) {
+        var images = App.utils.findClosestImagesToDate(data,new Date());
+        App.populateHomeThumbnails(images);
+     })
+  },
+
+  populateHomeThumbnails: function(data) {
+
+    console.log(data);
+
   }
 
 };
