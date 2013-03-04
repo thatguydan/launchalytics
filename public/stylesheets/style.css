@@ -36,8 +36,7 @@
   display: none;
 }
 .boxHeading {
-  margin-bottom: -5px;
-  margin-left: 10px;
+  margin:20px 10px -5px 10px;
 }
 .boundingBox {
   border:1px solid #ccc;

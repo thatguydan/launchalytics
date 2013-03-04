@@ -1,15 +1,16 @@
 var count = 0;
-
+var chartData = {};
+var rawData = {};
+var now = moment(Number);
 var dbyg = {};
-
 var START_DATE = new Date('Sat Mar 02 2013 12:00:00 GMT-0800 (PST)');
 var END_DATE = new Date();
-
-
 var App = {
   screenshotData:{},
 
   titleNum : 0,
+  launchTweets : 0,
+  launchhackTweets : 0,
   sensors : {
     "010101010101010101010101" : "pir8",
     "000001010101010101010101" : "pir5",
@@ -44,12 +45,14 @@ var App = {
     "2712BB000643_0101_0_30"    : "#DownHumidity",
     "4312BB000564_0101_0_31"    : "#UpTemp",
     "2712BB000643_0101_0_31"    : "#DownTemp",
+    "8BA093F06383AF4C_launch_0_9006" : "#launchTweets",
+    "8BA093F06383AF4C_launchhack_0_9006" : "#launchhackTweets"
   },
 
   init: function() {
     var pusher = new Pusher(App.user.pusherKey);
     var channel = pusher.subscribe(App.user.pusherChannel);
-
+  
     channel.bind('data', function(device) {
       if (device.D == 11) {
         App.animate(App.sensors[device.DA],'flash');
@@ -70,24 +73,45 @@ var App = {
         var guid = d.GUID();
         dbyg[guid] = d;
         // console.log(App.idmap[guid], last);
-        $(App.idmap[guid]).text(last);
+        var fname = App.idmap[guid];
+        $(fname).text(last);
+
+        if(d.Options.rawData.has_time_series) {
+          d.GetHistoricalData({from:1362232800000, to:now, interval: "15min",fn: "mean"}, function(data){
+            chartData[fname] = new google.visualization.DataTable();
+            chartData[fname].addColumn('datetime', 'Time');
+            chartData[fname].addColumn('number', 'yAxisLabel');
+
+              _.each(data,function(d) {
+                if (!rawData[d.t]) rawData[d.t] = {};
+                rawData[d.t][fname] = d.v;
+
+                var x = new Date(d.t);
+                // if (conversionFn) d.v = conversionFn(d.v);
+                var y = Math.round(d.v*100)/100;
+                chartData[fname].addRow([x,y]);
+              });
+
+            // rawData[fname] = data;
+          })
+        }
 
         if(guid == "8BA093F06383AF4C_launch_0_9006") {
-          var options = {
-            // from: timestamp,
-            // to: timestamp,
-            interval: "1h",
-            fn: "count"
-          }
-          d.GetHistoricalData(options, function(data) {
-            // console.log(data);
-            console.log(data[data.length-1].v)
+          d.GetHistoricalData({interval: "1h",fn: "count"}, function(data) {
+            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));          
+            App.launchTweets = data[data.length-1].v;
+            console.log('launch = '+App.launchTweets)
           });
         }
+        if(guid == "8BA093F06383AF4C_launchhack_0_9006") {
+          d.GetHistoricalData({interval: "1h",fn: "count"}, function(data) {
+            $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));          
+            App.launchhackTweets = data[data.length-1].v;
+            console.log('launchhack = '+App.launchhackTweets)
+          });
+        }
+
       });
-
-
-
     });
 
     setInterval(function() {
@@ -95,22 +119,14 @@ var App = {
       var oldPrefix = $('#titlePrefix'+App.titleNum);
       setTimeout(function() {
         oldPrefix.addClass('hidden');
-      },270);
+      },240);
       App.titleNum = (App.titleNum == 7) ? 0 : App.titleNum + 1;
       setTimeout(function() {
         $('#titlePrefix'+App.titleNum).removeClass('hidden')
         App.animate('titlePrefix'+App.titleNum,'bounceInDown')
-      },270);
+      },240);
     },5000);
 
-  },
-
-  titleAnim: function(id,anim) {
-    var el = $('#'+id);
-    el.addClass('animated '+anim);
-    setTimeout(function(){
-      el.removeClass('animate '+anim);
-    },1300);
   },
 
   animate: function(id,anim) {

@@ -5,6 +5,7 @@ html
     script(src='/javascripts/jquery-1.9.1.min.js')
     script(src='/javascripts/pusher.min.js')
     script(src='/javascripts/ninja.js')
+    script(src='/javascripts/moment.min.js')
     script(src='/javascripts/app.js')
     script(src='/javascripts/app.utils.js')
 
@@ -18,7 +19,6 @@ html
     script(type='text/javascript', src='https://www.google.com/jsapi')
 
     script(type='text/javascript', src='/javascripts/underscore-min.js')
-    script(src='/javascripts/moment.min.js')
 
     link(rel='stylesheet', href='/css/jquery-ui-1.10.1.custom.css')
     script(src='/js/vendor/jquery-ui-1.10.1.custom.js')
@@ -28,10 +28,13 @@ html
   body
     block content
     script
+      google.load("visualization", "1", {packages: ["corechart"]});
       App.user = !{JSON.stringify(user)};
       ninja = new Ninja({
         server: '',
         version: 0,
         accessToken: ''
       });
-      $(document).on('ready', App.init);
+      $(document).on('ready', function(){
+        google.setOnLoadCallback(App.init);
+      });

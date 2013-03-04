@@ -36,7 +36,7 @@ block content
 
       .row
         .large-12.columns
-          #chart_div
+          #mainChart
 
       h4.subheader.boxHeading Wifi Device Vendors
       .boundingBox
@@ -103,69 +103,17 @@ block content
       p Its getting hot in here.
         i.foundicon-cloud
       .row 
-        .large-6.columns
+        .small-6.columns
           h6 Upstairs
-          .panel(style="height:150px")
+          .panel(style="height:120px")
             h3#UpTemp 0
             h3#UpHumidity 0
-        .large-6.columns
+        .small-6.columns
           h6 Downstairs
-          .panel(style="height:150px")
+          .panel(style="height:120px")
             h3#DownTemp.subheader 0
             h3#DownHumidity.subheader 0
 
-      p
-        | We're stoked you want to try Foundation! To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.
-      h4 Other Resources
-      p Once you've exhausted the fun in this document, you should check out:
-      ul.disc
-        li
-          a(href='http://foundation.zurb.com/docs') Foundation Documentation
-          br
-          | Everything you need to know about using the framework.
-        li
-          a(href='http://github.com/zurb/foundation') Foundation on Github
-          br
-          | Latest code, issue reports, feature requests and more.
-        li
-          a(href='http://twitter.com/foundationzurb') @foundationzurb
-          br
-          | Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).
-  //- script
-  //-   document.write('<script src=' +
-  //-   ('__proto__' in {} ? '/js/vendor/zepto' : '/js/vendor/jquery') +
-  //-   '.js><\\/script>')
-  //- script(src='/js/foundation.min.js')
-  //
-      
-      <script src="js/foundation/foundation.js"></script>
-      
-      <script src="js/foundation/foundation.alerts.js"></script>
-      
-      <script src="js/foundation/foundation.clearing.js"></script>
-      
-      <script src="js/foundation/foundation.cookie.js"></script>
-      
-      <script src="js/foundation/foundation.dropdown.js"></script>
-      
-      <script src="js/foundation/foundation.forms.js"></script>
-      
-      <script src="js/foundation/foundation.joyride.js"></script>
-      
-      <script src="js/foundation/foundation.magellan.js"></script>
-      
-      <script src="js/foundation/foundation.orbit.js"></script>
-      
-      <script src="js/foundation/foundation.placeholder.js"></script>
-      
-      <script src="js/foundation/foundation.reveal.js"></script>
-      
-      <script src="js/foundation/foundation.section.js"></script>
-      
-      <script src="js/foundation/foundation.tooltips.js"></script>
-      
-      <script src="js/foundation/foundation.topbar.js"></script>
-      
-      
-  script
-    //- $(document).foundation();
+      .row
+        .panel(style="height:400px")
+          p Heatmap goes here.
