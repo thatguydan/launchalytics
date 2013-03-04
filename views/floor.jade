@@ -21,13 +21,13 @@ block content
         // TODO: mash device into this list so we can pick the best device for a given subdevice
         /*
         Downstairs: 2712BB000643_0_0_11
-          "Fypdq" -> 8
-          "NzFJs" -> 5
           "9gnKV" -> 2
-          "MCxbw" -> 6
           "hFnwT" -> 3
           "gEsyw" -> 4
+          "NzFJs" -> 5
+          "MCxbw" -> 6
           "UaeJ5" -> 7
+          "Fypdq" -> 8
 
         Upstairs: 4312BB000564_0_0_11
           "gL9hK" -> 1
@@ -35,24 +35,27 @@ block content
           "Ibrv4" -> 3
           "Qog1K" -> 4
           "wZyiL" -> 5
+          "IabpG" -> 6
           "BbQRl" -> 7
           "mZLsC" -> 8
-          "IabpG" -> 6
         */
 
         var pir_subdevices = [
-          "Fypdq",
-          "NzFJs",
-          "9gnKV",
-          "MCxbw",
-          "hFnwT",
-          "gEsyw",
-          "UaeJ5"];
-        return $.getJSON('/rest/v0/device/2712BB000643_0_0_11/subdevice/' + pir_subdevices[id] + '/data?interval=10min', function(data, status) {cb(id, data)});
+          "4312BB000564_0_0_11:gL9hK", // 1
+          "2712BB000643_0_0_11:9gnKV", // 2
+          "2712BB000643_0_0_11:hFnwT", // 3
+          "4312BB000564_0_0_11:Qog1K", // 4
+          "2712BB000643_0_0_11:NzFJs", // 5
+          "4312BB000564_0_0_11:IabpG", // 6
+          "2712BB000643_0_0_11:UaeJ5", // 7
+          "2712BB000643_0_0_11:Fypdq", // 8
+        ];
+        var parts = pir_subdevices[id].split(':')
+        return $.getJSON('/rest/v0/device/' + parts[0] + '/subdevice/' + parts[1] + '/data?interval=10min', function(data, status) {cb(id, data)});
       };
 
       var datasets = [];
-      for (i = 0 ; i < 7; i++) {
+      for (i = 0 ; i < 8; i++) {
         load_subdevice(i, function(id, data) {
           datasets[id] = data.data;
         });
@@ -60,14 +63,14 @@ block content
 
       var load_heatmap = function(value) {
         var data = {max: 90, data: [
-          {x: 345, y: 264}, // 5
-          {x: 629, y: 254}, // 3
+          {x: 498, y: 606}, // 1
           {x: 714, y: 260}, // 2
+          {x: 629, y: 254}, // 3
+          {x: 580, y: 610}, // 4
+          {x: 345, y: 264}, // 5
+          {x: 411, y: 605}, // 6
           {x: 776, y: 261}, // 7
           {x: 900, y: 320}, // 8
-          {x: 411, y: 605}, // 6
-          {x: 498, y: 606}, // 1
-          {x: 580, y: 610}, // 4
         ]};
 
         var max = 90;
