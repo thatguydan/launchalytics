@@ -1,9 +1,10 @@
 var count = 0;
 
+var dbyg = {};
+
 var App = {
 
   titleNum : 0,
-  deviceCounts:{},
   sensors : {
     "010101010101010101010101" : "pir8",
     "000001010101010101010101" : "pir5",
@@ -16,9 +17,34 @@ var App = {
     "000100010111010100110000" : "stripeButton"
   },
 
+  idmap : {
+    "8BA093F06383AF4C_0_0_9004" : "#TotalServers",
+    "8BA093F06383AF4C_80_0_9004" : "#80",
+    "8BA093F06383AF4C_3000_0_9004" : "#3000",
+    "8BA093F06383AF4C_4000_0_9004" : "#4000",
+    "8BA093F06383AF4C_4567_0_9004" : "#4567",
+    "8BA093F06383AF4C_5000_0_9004" : "#5000",
+    "8BA093F06383AF4C_8000_0_9004" : "#8000",
+    "8BA093F06383AF4C_8080_0_9004" : "#8080",
+    "4EA563074116A30C_0_0_9005" : "#TotalWifi",
+    "4EA563074116A30C_apple_0_9005" : "#apple",
+    "4EA563074116A30C_lg_0_9005" : "#lg",
+    "4EA563074116A30C_motorola_0_9005" : "#motorola",
+    "4EA563074116A30C_samsung_0_9005" : "#samsung",
+    "4EA563074116A30C_asustek_0_9005" : "#asustek",
+    "4EA563074116A30C_other_0_9005" : "#other",
+    "4EA563074116A30C_htc_0_9005" : "#htc",
+    "4EA563074116A30C_intel_0_9005" : "#intel",
+    "4312BB000564_0101_0_30"    : "#UpHumidity",
+    "2712BB000643_0101_0_30"    : "#DownHumidity",
+    "4312BB000564_0101_0_31"    : "#UpTemp",
+    "2712BB000643_0101_0_31"    : "#DownTemp",
+  },
+
   init: function() {
     var pusher = new Pusher(App.user.pusherKey);
     var channel = pusher.subscribe(App.user.pusherChannel);
+
     channel.bind('data', function(device) {
       if (device.D == 11) {
         App.animate(App.sensors[device.DA],'flash');
@@ -26,8 +52,8 @@ var App = {
         App.animate('heart','pulse');
         switch(device.D) {
           case 9005:
-            console.log("Device Count " + device.DA);
-            $('#TotalWifi').text(device.DA);
+            $(App.idmap[device.GUID]).text(device.DA);
+            // $('#TotalWifi').text(device.DA);
             break;
           case 9004:
             console.log("Server Count on port ",device.G,device.DA);
@@ -44,12 +70,25 @@ var App = {
             if (device.GUID == '2712BB000643_0101_0_31') $('#DownTemp').text(device.DA);
             console.log(device.GUID);
           case 999: case 1007: case 1005: case 1000:
-            // ignore leds
+            // ignore leds & network
             break;
           default:
             console.log('unhandled',device);
         }
       }
+    });
+
+    ninja.User.GetDevices(function(response){
+      _.each(response.devices, function(d){
+        var last = d.Options.rawData.last_data.DA;
+        var guid = d.GUID();
+        dbyg[guid] = d;
+        // console.log(App.idmap[guid], last);
+        $(App.idmap[guid]).text(last);
+      });
+
+
+
     });
 
     setInterval(function() {

@@ -107,6 +107,7 @@ app.get('/drilldown', requiresAuthentication, routes.drilldown);
 app.get('/screenshots.json', requiresAuthentication, screenshots.get);
 app.get('/screenshots', requiresAuthentication, screenshots.show);
 app.get('/screenshots/:ip/:image', requiresAuthentication, screenshots.fetchImage);
+app.get('/floor', requiresAuthentication, routes.floor);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
