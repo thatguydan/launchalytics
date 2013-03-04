@@ -19,6 +19,27 @@ block content
       var xx = h337.create(config);
       var load_subdevice = function(id, cb) {
         // TODO: mash device into this list so we can pick the best device for a given subdevice
+        /*
+        Downstairs: 2712BB000643_0_0_11
+          "Fypdq" -> 8
+          "NzFJs" -> 5
+          "9gnKV" -> 2
+          "MCxbw" -> 6
+          "hFnwT" -> 3
+          "gEsyw" -> 4
+          "UaeJ5" -> 7
+
+        Upstairs: 4312BB000564_0_0_11
+          "gL9hK" -> 1
+          "cWDR5" -> 2
+          "Ibrv4" -> 3
+          "Qog1K" -> 4
+          "wZyiL" -> 5
+          "BbQRl" -> 7
+          "mZLsC" -> 8
+          "IabpG" -> 6
+        */
+
         var pir_subdevices = [
           "Fypdq",
           "NzFJs",
