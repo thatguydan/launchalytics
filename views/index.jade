@@ -13,7 +13,7 @@ block content
         #titlePrefix5.titlePrefix.hidden launch
         #titlePrefix6.titlePrefix.hidden tild
         #titlePrefix7.titlePrefix.hidden sweet
-        #tileSuffix.titleSuffix *alytics
+        #tileSuffix.titleSuffix(onclick="drawDefault()",style="cursor:pointer") *alytics
       p.tagline If you don't count it, does it really exist?
       hr(style="margin-top:0")
     .small-2.columns#flare
@@ -24,14 +24,14 @@ block content
   .row
     .large-8.columns
       .row
-        .small-4.columns
-          h5 Wifi Clients
+        .small-4.columns(onclick="drawWifi()",style="cursor:pointer")
+          h4.subheader Wifi Clients Nearby
           #TotalWifi.stat 0
-        .small-4.columns
-          h5 Webservers
+        .small-4.columns(onclick="drawServers()",style="cursor:pointer")
+          h4.subheader Open Webservers
           #TotalServers.stat 0
-        .small-4.columns
-          h5 Tweets
+        .small-4.columns(onclick="drawTweets()",style="cursor:pointer")
+          h4.subheader Tweets per hour
           #TotalTweets.stat 0
 
       .row
@@ -67,7 +67,55 @@ block content
             h5.subheader Other
             #other.smallstat 0
 
-      h4.subheader.boxHeading Active Web Server Ports
+    .large-4.columns
+      h4.subheader.boxHeading(style="margin-top:30px") Environment
+      .boundingBox(onclick="drawTemp()",style="cursor:pointer")
+        .row 
+          .small-6.columns
+            h6.center Upstairs
+              h3
+                span#UpTemp 0
+                span.subheader &deg;C
+              h3
+                span#UpHumidity 0
+                span.subheader %
+          .small-6.columns.center
+            h6.center Downstairs
+              h3
+                span#DownTemp 0
+                span.subheader &deg;C
+              h3
+                span#DownHumidity 0
+                span.subheader %
+
+      h4.subheader.boxHeading Real-time Activity
+      .boundingBox
+        .row(style="height:504px")
+          a(href="/floor")
+            #hall.shrunk
+              #pir1.hold
+                .pie
+              #pir2.hold
+                .pie
+              #pir3.hold
+                .pie
+              #pir4.hold
+                .pie
+              #pir5.hold
+                .pie
+              #pir6.hold
+                .pie
+              #pir7.hold
+                .pie
+              #pir8.hold
+                .pie
+  .row
+    .large-4.columns
+      h4.subheader Hacker Time-lapse
+      .pane 
+        p pictures here.
+    .large-8.columns
+      h4.subheader Active Web Server Ports
       .boundingBox
         .row  
           .small-3.columns
@@ -87,33 +135,3 @@ block content
             #8080.smallstat 0
 
 
-      //- .row
-      //-   .large-8.columns
-      //-     h3 The Grid
-      //-   .large-4.columns
-      //-     label(for='customDropdown') Medium Example
-      //-     select#customDropdown.medium
-      //-       option(disabled='DISABLED') This is a dropdown
-      //-       option This is another option
-      //-       option This is another option too
-      //-       option Look, a third option
-
-    .large-4.columns
-      h4 Environment
-      p Its getting hot in here.
-        i.foundicon-cloud
-      .row 
-        .small-6.columns
-          h6 Upstairs
-          .panel(style="height:120px")
-            h3#UpTemp 0
-            h3#UpHumidity 0
-        .small-6.columns
-          h6 Downstairs
-          .panel(style="height:120px")
-            h3#DownTemp.subheader 0
-            h3#DownHumidity.subheader 0
-
-      .row
-        .panel(style="height:400px")
-          p Heatmap goes here.

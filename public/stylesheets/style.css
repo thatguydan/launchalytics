@@ -12,6 +12,19 @@
   color: #fff;
   font-size: 3em;
 }
+#hall.shrunk {
+  -webkit-transform: scale(0.4,0.4) rotate(90deg);
+  margin-left: -473px;
+  margin-top: -120px;
+  border:none;
+}
+#mainChart {
+  margin:20px 0;
+  height:340px;
+}
+h5 {
+  text-align: center;
+}
 .stat {
   font-size: 6em;
   text-align: center;

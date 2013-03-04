@@ -1,6 +1,8 @@
 var count = 0;
 var chartData = {};
+var sortedDates = [];
 var rawData = {};
+var rawTweetData = {};
 var now = moment(Number);
 var dbyg = {};
 var START_DATE = new Date('Sat Mar 02 2013 12:00:00 GMT-0800 (PST)');
@@ -78,38 +80,40 @@ var App = {
 
         if(d.Options.rawData.has_time_series) {
           d.GetHistoricalData({from:1362232800000, to:now, interval: "15min",fn: "mean"}, function(data){
-            chartData[fname] = new google.visualization.DataTable();
-            chartData[fname].addColumn('datetime', 'Time');
-            chartData[fname].addColumn('number', 'yAxisLabel');
-
               _.each(data,function(d) {
                 if (!rawData[d.t]) rawData[d.t] = {};
                 rawData[d.t][fname] = d.v;
-
-                var x = new Date(d.t);
-                // if (conversionFn) d.v = conversionFn(d.v);
-                var y = Math.round(d.v*100)/100;
-                chartData[fname].addRow([x,y]);
               });
-
-            // rawData[fname] = data;
           })
         }
 
         if(guid == "8BA093F06383AF4C_launch_0_9006") {
-          d.GetHistoricalData({interval: "1h",fn: "count"}, function(data) {
+          d.GetHistoricalData({interval: "1h",fn:"count"}, function(data) {
             $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));          
             App.launchTweets = data[data.length-1].v;
-            console.log('launch = '+App.launchTweets)
+            _.each(data,function(d) {
+              if (!rawTweetData[d.t]) rawTweetData[d.t] = {};
+              rawTweetData[d.t]['launch'] = d.v;
+              console.log(d.v)
+            });
+
           });
         }
         if(guid == "8BA093F06383AF4C_launchhack_0_9006") {
-          d.GetHistoricalData({interval: "1h",fn: "count"}, function(data) {
+          d.GetHistoricalData({interval: "1h",fn:"count"}, function(data) {
             $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(data[data.length-1].v));          
             App.launchhackTweets = data[data.length-1].v;
-            console.log('launchhack = '+App.launchhackTweets)
+            _.each(data,function(d) {
+              if (!rawTweetData[d.t]) rawTweetData[d.t] = {};
+              rawTweetData[d.t]['launchhack'] = d.v;
+              console.log(d.v)
+            });
           });
         }
+        setTimeout(function(){
+          sortedDates = Object.keys(rawData).sort();
+          drawDefault();
+        },2500);
 
       });
     });
