@@ -3,12 +3,23 @@ extends layout
 block content
   .row
     .large-10.columns
-      h2 *alytics
-      p Count it all!
-      hr
-    .large-2.columns
+      h2(style="width:307px;display:inline-block")
+        #titlePrefix0.titlePrefix hack
+        #titlePrefix1.titlePrefix.hidden launch
+        #titlePrefix2.titlePrefix.hidden ninj
+        #titlePrefix3.titlePrefix.hidden every
+        #titlePrefix4.titlePrefix.hidden life
+        #titlePrefix5.titlePrefix.hidden launch
+        #titlePrefix6.titlePrefix.hidden tild
+        #titlePrefix7.titlePrefix.hidden sweet
+        #tileSuffix.titleSuffix *alytics
+      p.tagline If you don't count it, does it really exist?
+      hr(style="margin-top:0")
+    .large-2.columns#flare
       #heart
-        i.foundicon-heart(style="font-size:10em")
+        i.foundicon-heart
+      #plus
+        i.foundicon-plus
   .row
     .large-8.columns
       .row

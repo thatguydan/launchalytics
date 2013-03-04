@@ -5,11 +5,39 @@ body {
 a {
   color: #00B7FF;
 }
+#flare {
+  position:relative;
+}
+#heart {
+  font-size:10em;
+  position: absolute;
+}
+#plus {
+  position: absolute;
+  top: 49px;
+  left: 71px;
+  color: #fff;
+  font-size: 3em;
+}
 .stat {
   font-size: 6em;
   text-align: center;
 }
-
+.titlePrefix {
+  display: inline-block;
+  width: 157px;
+  text-align: right;
+}
+.titleSuffix {
+  display: inline-block;
+  width:150px;
+}
+.tagline {
+  display: inline-block;
+}
+.hidden {
+  display: none;
+}
 #test {
   height:400px;
   width: 400px;

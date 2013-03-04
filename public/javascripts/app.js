@@ -2,6 +2,7 @@ var count = 0;
 
 var App = {
 
+  titleNum : 0,
   deviceCounts:{},
   sensors : {
     "010101010101010101010101" : "pir8",
@@ -30,29 +31,48 @@ var App = {
             break;
           case 9004:
             console.log("Server Count on port ",device.G,device.DA);
-            if (device.G === 0) $('#TotalServers').text(device.DA);
+            if (device.G === '0') $('#TotalServers').text(device.DA);
             break;
           case 9006:
             $('#TotalTweets').text(parseInt($('#TotalTweets').text())+parseInt(device.DA));
           case 30:
-            if (device.GUID == '4312BB000564_0101_0_31') $('#UpHumidity').text(device.DA);
-            if (device.GUID == '2712BB000643_0101_0_31') $('#DownHumidity').text(device.DA);
+            if (device.GUID == '4312BB000564_0101_0_30') $('#UpHumidity').text(device.DA);
+            if (device.GUID == '2712BB000643_0101_0_30') $('#DownHumidity').text(device.DA);
             console.log(device.GUID);
           case 31:
             if (device.GUID == '4312BB000564_0101_0_31') $('#UpTemp').text(device.DA);
             if (device.GUID == '2712BB000643_0101_0_31') $('#DownTemp').text(device.DA);
             console.log(device.GUID);
+          case 999: case 1007: case 1005: case 1000;
+            // ignore leds
+            break;
           default:
             console.log('unhandled',device);
         }
       }
     });
 
-    // setInterval(function() {
-    //   console.log(App.deviceCounts);
-    //   App.deviceCounts = {};
-    // },60000);
+    setInterval(function() {
+      App.animate('titlePrefix'+App.titleNum,'bounceOutDown');
+      var oldPrefix = $('#titlePrefix'+App.titleNum);
+      setTimeout(function() {
+        oldPrefix.addClass('hidden');
+      },270);
+      App.titleNum = (App.titleNum == 7) ? 0 : App.titleNum + 1;
+      setTimeout(function() {
+        $('#titlePrefix'+App.titleNum).removeClass('hidden')
+        App.animate('titlePrefix'+App.titleNum,'bounceInDown')
+      },270);
+    },5000);
 
+  },
+
+  titleAnim: function(id,anim) {
+    var el = $('#'+id);
+    el.addClass('animated '+anim);
+    setTimeout(function(){
+      el.removeClass('animate '+anim);
+    },1300);
   },
 
   animate: function(id,anim) {
