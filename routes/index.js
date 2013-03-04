@@ -18,6 +18,12 @@ exports.drilldown = function(req, res){
   });
 };
 
+exports.floor = function(req, res){
+  res.render('floor', {
+    title: '*alytics',
+    user:req.session.ninja
+  });
+};
 
 /*
  * handle Ninja's authentication

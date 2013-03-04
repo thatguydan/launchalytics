@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  p
+    a(href="/") Back to dashboard
+  #floor
+
+  script(src='/js/vendor/heatmap.js')
+  script(type='text/javascript')
+    $(function () {
+      var xx = h337.create({"element":document.getElementById("floor"), "radius":25, "visible":true});
+
+      xx.get("canvas").onclick = function(ev){
+        // TODO: these coords are correct, but I'm not sure which PIR subdevices these map to.
+        var data = {max: 90, data: [
+          {x: 345, y: 264},
+          {x: 629, y: 254},
+          {x: 714, y: 260},
+          {x: 776, y: 261},
+          {x: 900, y: 320},
+          {x: 411, y: 605},
+          {x: 498, y: 606},
+          {x: 580, y: 610},
+        ]};
+        var pos = h337.util.mousePosition(ev);
+        xx.store.addDataPoint(pos[0],pos[1]);
+        var max = 90;
+        for (d in data.data) {
+            data.data[d].count=Math.floor(Math.random()*max+1);
+        }
+        xx.store.setDataSet(data);
+      };
+
+      document.getElementById("gen").onclick = function(){
+        xx.store.generateRandomDataSet(100);
+      };
+    });
