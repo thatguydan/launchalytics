@@ -115,7 +115,11 @@ var App = {
           drawDefault();
         },2500);
 
+
+
       });
+
+
     });
 
     setInterval(function() {
@@ -131,6 +135,10 @@ var App = {
       },240);
     },5000);
 
+  },
+
+  initHome: function() {
+    App.fetchHomeThumbnails();
   },
 
   animate: function(id,anim) {
@@ -198,6 +206,14 @@ var App = {
   },
 
   populateHomeThumbnails: function(data) {
+    // var goodHosts = [
+    //   '10.100.12.249:3000',
+    //   '10.100.15.251:3000',
+    //   '10.100.14.237:3000',
+    //   '10.100.20.254:3000',
+    //   '10.100.25.232:3000'
+    // ]
+
 
     console.log(data);
 
