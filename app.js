@@ -88,6 +88,7 @@ app.get('/get', requiresAuthentication, store.get);
 
 app.get('/', requiresAuthentication, routes.index);
 app.get('/drilldown', requiresAuthentication, routes.drilldown);
+app.get('/floor', requiresAuthentication, routes.floor);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
