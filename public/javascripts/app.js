@@ -156,7 +156,7 @@ var App = {
 
       var id = App.utils.sanitize(ip);
 
-      lis += '<li><img id="s_'+id+'" data-time="'+images[ip]+'" class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
+      lis += '<li><img data-host="'+ip+'" data-time="'+images[ip]+'" class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
     });
     $('.js-screenshot-list').html(lis);
   },
@@ -166,7 +166,7 @@ var App = {
 
       var id = App.utils.sanitize(ip);
 
-      lis += '<li><img id="s_'+id+'" data-time="'+images[ip]+'" class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
+      lis += '<li><img data-host="'+ip+'" data-time="'+images[ip]+'" class="screenshot-image" src="/screenshots/'+ip+'/'+images[ip]+'/thumbnail"></li>';
     });
 
     // $('')
@@ -174,10 +174,19 @@ var App = {
   },
   updateScreenshots: function(value) {
     var time = (END_DATE.getTime()-START_DATE.getTime())*(value/100) + START_DATE.getTime();
-    var images = App.utils.findClosestImagesToDate(App.screenshotData,time);
+    var images = App.utils.findClosestImagesToDate(App.screenshotData,new Date(time));
     App.populateImageCanvas(images);
     $('#date').text(moment(time).fromNow())
 
+  },
+  updateModalScreenshots: function(host,value) {
+    console.log(arguments);
+    var time = (END_DATE.getTime()-START_DATE.getTime())*(value/100) + START_DATE.getTime();
+    var images = App.utils.findClosestImagesToDate(App.screenshotData,new Date(time));
+    var url = App.utils.getLargeImageUrl(host,images[host]);
+    console.log(url)
+    $('.js-modal-screenshot').attr('src',url);
+    $('#date').text(moment(time).fromNow())
   }
 
 };

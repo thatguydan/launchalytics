@@ -13,7 +13,7 @@ App.utils = {
 
         var thisDate = new Date(images[i].split('.')[0]);
 
-        if (closestDate == null || Math.abs(thisDate - goalDate) < Math.abs(closestDate - goalDate)) {
+        if (closestDate == null || Math.abs(thisDate.getTime() - goalDate.getTime()) < Math.abs(closestDate.getTime() - goalDate.getTime())) {
           closestDate = thisDate;
           closestStr = images[i];
         }
@@ -26,5 +26,8 @@ App.utils = {
   },
   sanitize: function(input) {
     return input.replace(/\W/g, '')
+  },
+  getLargeImageUrl: function(host,time) {
+    return '/screenshots/'+host+'/'+time
   }
 }

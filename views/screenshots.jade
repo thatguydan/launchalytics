@@ -12,11 +12,31 @@ block content
 
     ul.js-screenshot-list.screenshot-list.small-block-grid-1.centered
 
+  #screenshot-modal.reveal-modal
+    img.js-modal-screenshot.modal-screenshot
+    #modal-slider
+    a.close-reveal-modal x
+
   script
     $(document).on('ready',function() {
       App.fetchImages();
       $("#slider").slider({
         slide: function(event, ui) { App.updateScreenshots(ui.value); }
       });
+      $(document).on('click','.screenshot-image',function() {
+        var dataset = this.dataset;
+        var url = App.utils.getLargeImageUrl(this.dataset.host,this.dataset.time);
+        $('.js-modal-screenshot').attr('src',url)
 
+        $("#modal-slider").slider({
+          slide: function(event, ui) { App.updateModalScreenshots(dataset.host,ui.value); }
+        });
+
+        $('#screenshot-modal').show().reveal({
+          animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+          animationspeed: 300,                       //how fast animtions are
+          closeonbackgroundclick: true,              //if you click background will modal close?
+          dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
+        });
+      });
     });
