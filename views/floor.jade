@@ -17,6 +17,7 @@ block content
         "gradient": { 0.3: "rgb(0,0,255)", 0.55: "rgb(0,255,255)", 0.65: "rgb(0,255,0)", 0.9: "yellow", 1.0: "rgb(255,0,0)" }
       };
       var xx = h337.create(config);
+      var max_points = 230;  // TODO: this should be based on the max # of points pulled from the subdevices
       var load_subdevice = function(id, cb) {
         // TODO: mash device into this list so we can pick the best device for a given subdevice
         /*
@@ -97,6 +98,8 @@ block content
         console.log(h337.util.mousePosition(ev));
       };
       $("#slider").slider({
+        min: 0,
+        max: max_points,
         animate: "fast",
         slide: function(event, ui) { load_heatmap(ui.value); },
         change: function(event, ui) { load_heatmap(ui.value); }
@@ -104,7 +107,7 @@ block content
 
       var nextSlide = function() {
         var v = $('#slider').slider('value');
-        if (v < 99) {
+        if (v < max_points - 1) {
           $('#slider').slider('value', v + 1);
         } else {
           clearInterval(interval);
