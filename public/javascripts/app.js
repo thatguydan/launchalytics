@@ -43,7 +43,7 @@ var App = {
             if (device.GUID == '4312BB000564_0101_0_31') $('#UpTemp').text(device.DA);
             if (device.GUID == '2712BB000643_0101_0_31') $('#DownTemp').text(device.DA);
             console.log(device.GUID);
-          case 999: case 1007: case 1005: case 1000;
+          case 999: case 1007: case 1005: case 1000:
             // ignore leds
             break;
           default:
@@ -81,6 +81,22 @@ var App = {
     setTimeout(function(){
       el.removeClass('animate '+anim);
     },1300);
+  },
+
+  fetchImages: function() {
+    $.get('/screenshots.json')
+     .done(function(data) {
+        var images = App.utils.findClosestImagesToDate(data,new Date('Sun Mar 03 2013 17:42:22 GMT-0800 (PST)'));
+        App.populateImageCanvas(images);
+     })
+  },
+  populateImageCanvas: function(images) {
+    console.log(images);
+    var lis = '';
+    Object.keys(images).forEach(function(ip) {
+      lis += '<li><img width=150 src="/screenshots/'+ip+'/'+images[ip]+'"></li>';
+    });
+    $('.screenshot-container').html(lis);
   }
 
 };
